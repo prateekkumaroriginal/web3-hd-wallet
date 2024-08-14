@@ -36,13 +36,13 @@ export const getSolanaAddressAndPrivateKey = (mnemonic: string, index: number) =
 export const getEthereumAddressAndPrivateKey = () => {
     const randomBytes = getRandomBytesSync(32);
     const privateKey = Buffer.from(randomBytes).toString("hex");
-    console.log("Private Key: ", privateKey);
 
     const publicKey = secp256k1.getPublicKey(privateKey);
-    console.log("publicKey", publicKey);
-    const address = Buffer.from(keccak256(publicKey)).toString("hex");
-    console.log("address", address);
-    const finalAddress = address.slice(-40);
-    console.log("0x" + finalAddress);
-    // console.log("Address: ", address);
+    const address = Buffer.from(keccak256(publicKey)).toString("hex").slice(-40);
+    const finalAddress = "0x" + address;
+
+    return {
+        address: finalAddress,
+        privateKey: privateKey
+    }
 }

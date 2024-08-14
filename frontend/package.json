@@ -12,6 +12,7 @@
   "dependencies": {
     "@solana/web3.js": "^1.95.2",
     "@types/bitcoinjs-lib": "^5.0.0",
+    "axios": "^1.7.4",
     "bip32": "^4.0.0",
     "bip39": "^3.1.0",
     "bip44": "^0.0.1",
