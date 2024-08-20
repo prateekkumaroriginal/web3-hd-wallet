@@ -5,6 +5,7 @@ import { generateMnemonic, mnemonicToSeedSync } from 'bip39';
 import { Buffer } from "buffer";
 import { derivePath } from 'ed25519-hd-key';
 import nacl from 'tweetnacl';
+import { debounce } from "lodash";
 import { Keypair, sendAndConfirmTransaction, PublicKey, Transaction, clusterApiUrl, Connection, SystemProgram, LAMPORTS_PER_SOL } from '@solana/web3.js';
 
 window.Buffer = Buffer
@@ -30,7 +31,7 @@ function App() {
   });
 
   const genNewMnemonic = () => {
-    const words = generateMnemonic(128);
+    const words = generateMnemonic();
     setMnemonicWords(words.split(" "));
   };
 
@@ -39,10 +40,11 @@ function App() {
     alert('Mnemonic copied to clipboard!');
   };
 
-  const handleClick = () => {
+
+  const handleClick = debounce(() => {
     genNewMnemonic();
     setShowing(true);
-  }
+  }, 200);
 
   const getSolanaAddressAndPrivateKey = (mnemonic: string) => {
     const seed = mnemonicToSeedSync(mnemonic);
